@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Property</title>
+<script>
+$(function() {
+
+	$( ".addFavourites" ).on("click", function(){
+			alert("!!!");
+		
+		try {
+			$(this).attr('disabled', true);
+			
+			var restIdToAdd = $(this).closest("p").attr("id");
+			
+			var myFavouriteRest=JSON.parse(localStorage.getItem("favProp"));
+			
+						alert(restIdToAdd);
+
+			
+			if(myFavouriteRest == null) {
+
+				myFavouriteRest = [];
+			}
+			
+			if(myFavouriteRest != null) {
+			
+				for ( var j = 0; j < myFavouriteRest.length; j++) {
+					
+					if ( restIdToAdd == myFavouriteRest[j]) {
+						
+						alert("This property is already in your favourites"); 
+						myFavouriteRest = [];
+					}
+				}
+			}
+			
+			myFavouriteRest.push(restIdToAdd);
+			
+			localStorage.setItem("favProp", JSON.stringify(myFavouriteRest));
+			
+		}
+		
+		catch (e) {
+			if (e) {
+				console.log("Error: Local storage limit exceeds");
+			}
+			
+			else {
+				console.log("ERROR: Saving to local storge.");
+			}
+		}
+	});
+});
+
+
+
+
+$(function() {
+	$( ".removeFavourites" ).click(function() {
+			alert("A");
+		
+			$(this).attr('disabled', true);
+			
+			var restIdToRemove = $(this).closest("p").attr("id");
+			
+			
+			 myFavouriteRest=JSON.parse(localStorage.getItem("favProp"));
+			
+			
+			if(myFavouriteRest != null) {
+				for ( var j = 0; j < myFavouriteRest.length; j++) {
+					
+					if ( restIdToRemove == myFavouriteRest[j]) {
+						
+						alert("This Resturant has been removed");
+						
+						delete myFavouriteRest[j];
+						
+						localStorage.setItem("favProp", JSON.stringify(myFavouriteRest));
+						
+						myFavouriteRest[j] = [];
+					}
+				}
+			}
+			
+			if(myFavouriteRest == null) {
+				alert("You have no favourite items");
+			}
+		});
+	});
+	
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script src="../jQueryA.js"></script>
+
+<script src="../jquery-ui.js"></script>
+<link href="../jquery-ui.css" rel="stylesheet">
+<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<img src="../assets/img/KamLaai.png">
+
+<p id="rest7">
+<button class="addFavourites">Add To Favourites</button>
+<button class="removeFavourites">Remove from Favourites</button>
+</p>
+
+</body>
+</html>
